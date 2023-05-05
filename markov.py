@@ -2,6 +2,9 @@
 
 import sys
 from random import choice
+import discord
+import secrets
+import os
 
 
 def open_and_read_file(filenames):
@@ -68,3 +71,21 @@ text = open_and_read_file(filenames)
 
 # Get a Markov chain
 chains = make_chains(text)
+
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        
+        return 
+
+    if message.content.startswith('$hello'):
+        await message.channel.send(make_text(chains))
+        
+
+client.run(client.run(os.environ['DISCORD_TOKEN']))
